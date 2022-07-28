@@ -1,6 +1,6 @@
 FROM library/python:3.9.0
 
-WORKDIR /app
-COPY . /app
+RUN mkdir /setup
+COPY ./requirements.txt /setup
 
-RUN pip install -r requirements.txt
+RUN pip install -r /setup/requirements.txt

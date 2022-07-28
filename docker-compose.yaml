@@ -5,3 +5,7 @@ services:
     build:
       dockerfile: Dockerfile
     entrypoint: ["python", "-m", "psst"]
+    working_dir: "/app"
+    volumes:
+      - ".:/app"
+      - "~/.psst:/.psst"
