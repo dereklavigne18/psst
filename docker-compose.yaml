@@ -2,8 +2,6 @@ version: "3.4"
 
 services:
   psst:
-    image: library/python:3.9.0
+    build:
+      dockerfile: Dockerfile
     entrypoint: ["python", "-m", "psst"]
-    working_dir: "/app"
-    volumes:
-      - "./:/app"
