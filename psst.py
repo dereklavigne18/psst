@@ -1,4 +1,5 @@
 import base64
+import getpass
 from os import mkdir, path
 import secrets
 
@@ -15,10 +16,10 @@ def cli_group():
 
 
 @cli_group.command()
-@click.option("--password", help="The password to protect the secret with.")
 @click.option("--secret", help="The name of secret to write to.")
 @click.option("--value", help="The value to lock up.")
-def register(password: str, secret: str, value: str):
+def register(secret: str, value: str):
+    password = getpass.getpass()
     key = key_from_password(password=password, create_salt=True)
     encrypted_value = encrypt_value(key, bytes(value, "utf-8"))
     store_encrypted_secret(secret, encrypted_value)
@@ -26,9 +27,10 @@ def register(password: str, secret: str, value: str):
 
 
 @cli_group.command()
-@click.option("--password", help="The password protecting the secret.")
 @click.option("--secret", help="The name of secret to look up.")
-def ask(password: str, secret: str):
+def ask(secret: str):
+    password = getpass.getpass()
+
     try:
         key = key_from_password(password=password, create_salt=False)
         encrypted_value = load_encrypted_secret(secret)
