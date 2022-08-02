@@ -1,6 +1,6 @@
 import base64
 import getpass
-from os import mkdir, path
+from os import listdir, mkdir, path
 import secrets
 
 import click
@@ -16,8 +16,14 @@ def cli_group():
 
 
 @cli_group.command()
-@click.option("--secret", help="The name of secret to write to.")
-@click.option("--value", help="The value to lock up.")
+def ls():
+    for secret in listdir(VAULT_PATH):
+        print(f"  {secret}")
+
+
+@cli_group.command()
+@click.option("-s", "--secret", help="The name of secret to write to.")
+@click.option("-v", "--value", help="The value to lock up.")
 def register(secret: str, value: str):
     password = getpass.getpass()
     key = key_from_password(password=password, create_salt=True)
@@ -27,7 +33,7 @@ def register(secret: str, value: str):
 
 
 @cli_group.command()
-@click.option("--secret", help="The name of secret to look up.")
+@click.option("-s", "--secret", help="The name of secret to look up.")
 def ask(secret: str):
     password = getpass.getpass()
 

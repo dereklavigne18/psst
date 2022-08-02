@@ -21,15 +21,21 @@ Psst is a simple secret keeper, which allows you to store your secrets locally a
    
 ## Examples
 
+See all your available passwords
+
+```commandline
+psst ls
+```
+
 Each secret has its own password, you can use the below command to store a secret behind a password of your choosing.
 
 ```commandline
-psst register --secret <secret name> --value <secret itself> --password <protecting password>
+psst register --secret <secret name> --value <secret itself>
 ```
 
 To view the secret you must provide the correct password for the secret. You can use the below command to view.
 
 ```commandline
-psst ask --secret <secret name> --password <protecting password>
+psst ask --secret <secret name>
 ```
  
