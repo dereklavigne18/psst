@@ -24,7 +24,12 @@ def ls():
 @cli_group.command()
 @click.option("-s", "--secret", help="The name of secret to write to.")
 @click.option("-v", "--value", help="The value to lock up.")
-def register(secret: str, value: str):
+@click.option("-f", "--force", default=False, help="This flag allows you to override an existing secret.")
+def register(secret: str, value: str, force: bool = False):
+    if not force and path.exists(f"{VAULT_PATH}/{secret}"):
+        print("Error - Secret already exists. If you wish to update use the --force (-f) flag.")
+        exit(0)
+
     password = getpass.getpass()
     key = key_from_password(password=password, create_salt=True)
     encrypted_value = encrypt_value(key, bytes(value, "utf-8"))
